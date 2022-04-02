@@ -20,7 +20,6 @@ def make_socket(SERVER_ADDR):
     try:
         client_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         
-        # server_address = (destination_address, port)
         logging.warning(f"connecting to {SERVER_ADDR}")
         client_sock.connect(SERVER_ADDR)
         return client_sock
@@ -51,8 +50,7 @@ def deserialisasi(data):
     
 
 def send_command(command_str,is_secure=False):
-    # alamat_server = server_address[0]
-    # port_server = server_address[1]
+
     client_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # gunakan fungsi diatas
     if is_secure == True:
@@ -103,103 +101,11 @@ def lihatversi(is_secure=False):
     hasil = send_command(cmd,is_secure=is_secure)
     return hasil
 
-# def request_client():
-#     data = getdatapemain(1,is_secure=False)
-#     if (data):
-#         print(data['nama'],data['nomor'], data['posisi'])
-#     else:
-#         print("kegagalan pada data transfer")
 
-#     data = getdatapemain(2,is_secure=False)
-#     if (data):
-#         print(data['nama'],data['nomor'], data['posisi'])
-#     else:
-#         print("kegagalan pada data transfer")
-
-# def daftar_pemain(k , table_data):
-#     respon =0
-#     texec = dict()
-#     status_task = dict()
-#     start_time = datetime.datetime.now()
-#     for k in range(request) :
-#         texec[k] = threading.Thread(target=getdatapemain, args=(random.randint(1, 20),))
-#         texec[k].start()
-        
-# #         texec[k] = task.submit(getdatapemain, k)
-#     for k in range(total_request):
-#         if (texec[k]):
-#             response += 1
-#         texec[k].join()
-    
-# #     for k in (1, 21):
-# #         status_task[k]=texec[k].result()
-    
-#         # print(f"Get list player from server")
-#         # data = getdatapemain(i,is_secure=False)
-#         # if (data):
-#         #     print(data['nomor'], data['nama'], data['posisi'])
-#         #     print("---------------------------------------------")
-#         # else:
-#         #     print("kegagalan pada data transfer")
-#         #     print("---------------------------------------------")
-#     end_time = datetime.datetime.now()
-#     timestamp = end_time - start_time
-#     # print(f"Waktu TOTAL yang dibutuhkan {timestamp} detik ")
-#     # print(status_task)
-#     table_data.append([request, request, response, timestamp])
-    
-# if __name__=='__main__':
-#     # h = lihatversi(is_secure=False)
-#     # if (h):
-#     #     print(h)
-#     # request()
-#     request = [1, 5, 10, 20]
-#     table_data = []
-    
-#     for k in request:
-#         daftar_pemain(k, table_data)
-        
-#     table_header = ["Jumlah Thread", "Jumlah Request", "Jumlah Response", "Latency"]
-#     print(tabulate(table_data, headers=table_header, tablefmt="fancy_grid"))
-    
-    
-# #     data = getdatapemain(1,is_secure=False)
-# #     if (data):
-# #         print(data['nama'],data['nomor'], data['posisi'])
-# #         print("---------------------------------------------")
-# #     else:
-# #         print("kegagalan pada data transfer")
-# #         print("---------------------------------------------")
-    
-    
-# #     data = getdatapemain(2,is_secure=False)
-# #     if (data):
-# #         print(data['nama'],data['nomor'], data['posisi'])
-# #         print("---------------------------------------------")
-# #     else:
-# #         print("kegagalan pada data transfer")
-# #         print("---------------------------------------------")
-
-# #     data = getdatapemain(3,is_secure=False)
-# #     if (data):
-# #         print(data['nama'],data['nomor'])
-# #         print("---------------------------------------------")
-# #     else:
-# #         print("kegagalan pada data transfer")
-# #         print("---------------------------------------------")
-
-# #     data = getdatapemain(4,is_secure=False)
-# #     if (h):
-# #         print(data['nama'],data['nomor'])
-# #         print("---------------------------------------------")
-# #     else:
-# #         print("kegagalan pada data transfer")
-# #         print("---------------------------------------------")
-
-def get_data_pemain(total_request, table_data):
+def getlistpemain(total_request, table_data):
     total_response = 0
     texec = dict()
-    catat_awal = datetime.datetime.now()
+    start_time = datetime.datetime.now()
 
     for k in range(total_request):
         # bagian ini merupakan bagian yang mengistruksikan eksekusi getdatapemain secara multithread
@@ -212,17 +118,18 @@ def get_data_pemain(total_request, table_data):
             total_response += 1
         texec[k].join()
 
-    catat_akhir = datetime.datetime.now()
-    selesai = catat_akhir - catat_awal
-    table_data.append([total_request, total_request, total_response, selesai])
+    end_time = datetime.datetime.now()
+    times = end_time - start_time
+    table_data.append([total_request, total_request, total_response, times])
 
 if __name__ == '__main__':
 
     total_request = [1, 5, 10, 20]
-    table_data = []
+    tabel_matrik = []
     
     for request in total_request:
-        get_data_pemain(request, table_data)
+        getlistpemain(request, tabel_matrik)
         
-    table_header = ["Jumlah Thread", "Jumlah Request", "Jumlah Response", "Latency"]
-    print(tabulate(table_data, headers=table_header, tablefmt="fancy_grid"))
+    header = ["Jumlah Thread", "Jumlah Request", "Jumlah Response", "Latency"]
+    print("")
+    print(tabulate(tabel_matrik, headers=header))
