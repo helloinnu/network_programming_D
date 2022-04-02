@@ -51,8 +51,6 @@ def deserialisasi(data):
     
 
 def send_command(command_str,is_secure=False):
-    # alamat_server = server_address[0]
-    # port_server = server_address[1]
     client_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # gunakan fungsi diatas
     if is_secure == True:
@@ -119,14 +117,14 @@ def getlistpemain(total_request, table_data):
             total_response += 1
         texec[k].join()
 
-    end_time = start_time.datetime.now()
-    times = start_time - end_time
-    table_data.append([total_request, total_request, total_response, times])
+    end_time = datetime.datetime.now()
+    times = end_time - start_time
+    tabel_matrik.append([total_request, total_request, total_response, times])
 
 if __name__ == '__main__':
 
     total_request = [1, 5, 10, 20]
-    tabel_metrik = []
+    tabel_matrik = []
     
     for request in total_request:
         getlistpemain(request, tabel_matrik)
