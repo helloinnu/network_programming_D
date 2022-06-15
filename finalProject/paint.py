@@ -114,7 +114,7 @@ class MyPaintWidget(Widget):
     idplayer=StringProperty("idplayer")
     warna=StringProperty("warna")
     def __init__(self,*args,**kwargs):
-        self.warna = kwargs.get('warna') or 'red'
+        self.warna = kwargs.get('warna') or 'green'
         self.idplayer = kwargs.get('idplayer') or '1'
         self.client_interface = ClientInterface(idplayer=self.idplayer,warna=self.warna)
         self.client_interface.player_register(self.idplayer)
@@ -139,13 +139,9 @@ class MyPaintWidget(Widget):
 
     def on_touch_down(self, touch):
         with self.canvas:
-            #a,b,c = cwarna[self.warna]
-            #Color(int(a),int(b),int(c))
-            #touch.ud['line'] = Line(points=(touch.x, touch.y))
             self.client_interface.set_location(int(touch.x),int(touch.y),'mousedown')
 
     def on_touch_move(self, touch):
-        #touch.ud['line'].points += [touch.x, touch.y]
         self.client_interface.set_location(int(touch.x), int(touch.y),eventname='mousemove')
 
 
@@ -164,11 +160,11 @@ class MyPaintApp(App):
 
 if __name__ == '__main__':
     idplayer = '1'
-    warna = 'red'
+    warna = 'green'
     try:
         idplayer = sys.argv[1]
         warna = sys.argv[2]
     except:
         pass
     MyPaintApp(idplayer=idplayer, warna=warna).run()
-
+ 
