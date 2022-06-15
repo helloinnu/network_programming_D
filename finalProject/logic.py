@@ -59,8 +59,8 @@ class PlayerServerInterface:
 
     def set_location(self,params=[]):
         pnum = params[0]
-        #x = params[1]
-        #y = params[2]
+        x = params[1]
+        y = params[2]
         try:
             self.queues[pnum].put(params)
             return dict(status='OK', player=pnum)

@@ -19,7 +19,7 @@ import logging
 import json
 
 class ClientInterface:
-    def __init__(self,idplayer='1',warna="red"):
+    def __init__(self,idplayer='1',warna='red'):
         self.cwarna = cwarna[warna]
         print(self.cwarna)
         self.idplayer=idplayer
@@ -114,7 +114,7 @@ class MyPaintWidget(Widget):
     idplayer=StringProperty("idplayer")
     warna=StringProperty("warna")
     def __init__(self,*args,**kwargs):
-        self.warna = kwargs.get('warna') or 'green'
+        self.warna = kwargs.get('warna') or 'red'
         self.idplayer = kwargs.get('idplayer') or '1'
         self.client_interface = ClientInterface(idplayer=self.idplayer,warna=self.warna)
         self.client_interface.player_register(self.idplayer)
@@ -142,6 +142,7 @@ class MyPaintWidget(Widget):
             self.client_interface.set_location(int(touch.x),int(touch.y),'mousedown')
 
     def on_touch_move(self, touch):
+        #touch.ud['line'].points += [touch.x, touch.y]
         self.client_interface.set_location(int(touch.x), int(touch.y),eventname='mousemove')
 
 
@@ -159,12 +160,11 @@ class MyPaintApp(App):
 
 
 if __name__ == '__main__':
-    idplayer = '1'
-    warna = 'green'
+    idplayer = '3'
+    warna = 'yellow'
     try:
         idplayer = sys.argv[1]
         warna = sys.argv[2]
     except:
         pass
     MyPaintApp(idplayer=idplayer, warna=warna).run()
- 
